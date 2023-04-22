@@ -1,9 +1,21 @@
+### IMPORTANT ###
+# RUN FROM BoggleFinder
+# AS `python3 algorithm/gen_counts.py <word list key> <min word length>
+# where word list key is in the word_list dictionary on line 12 as a key
+# and min word length is an int
+
 from algo import load_word_table
 import time
 import json
 import sys
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
+word_lists = {
+    '1000': './data/1000_common_words.txt',
+    '10000': './data/10000_words_mit.txt',
+    'common': './data/1000_common_words.txt',
+    'mit': './data/10000_words_mit.txt'
+}
 
 def build_pcts(word_set):
     count_dict = add_entry('', word_set, {})
@@ -21,11 +33,8 @@ def add_entry(incoming, word_set, count_dict):
     return count_dict
 
 if __name__ == "__main__":
-    min_length = int(sys.argv[1])
-    word_list_size = sys.argv[2]
-    word_lists = {
-        '1000': './data/1000_common_words.txt'
-    }
+    min_length = int(sys.argv[2])
+    word_list_size = sys.argv[1]
     word_set = load_word_table(word_lists[word_list_size], min_length)
     start = time.time()
     count_dict = build_pcts(word_set)
